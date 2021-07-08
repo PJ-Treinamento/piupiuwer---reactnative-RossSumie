@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useNavigation } from "@react-navigation/core";
 import api from '../../services/api';
 import {FontAwesome} from '@expo/vector-icons'
-import {AddPiu, Container, Interactions, Logo, Timeline, Topbar} from './styles';
+import {AddPiu, Container, Interactions, Logo, SearchBar, SearchItems, SearchLogo, Timeline, Topbar} from './styles';
 import PiuComp from '../../components/Piu';
 import { Piu } from '../../components/Piu';
 import logoImg from '../../assets/images/logo.png'
 
 import { User } from '../../hooks/contexts/auth';
+import {Animated} from 'react-native';
 
 function Feed(){
     const[pius, setPius] = useState<Piu[]>([])
+    const [renderAgain, setRenderAgain] = useState(false)
     useEffect(() => {
         const fetchData = async () => {
             const response = await api.get ('/pius')
@@ -18,7 +20,7 @@ function Feed(){
         setPius(response.data)
         }
         fetchData()
-    }, [])
+    }, [renderAgain])
 
     const [users, setUsers] = useState<User[]>([]);
     useEffect(() => {
@@ -32,11 +34,19 @@ function Feed(){
     }, [])
     
     const [search, setSearch] = useState("");
+    const animation = new Animated.Value(30);
+
+    function onSearch (){
+        Animated.spring(animation,{ 
+            toValue: 150,
+            useNativeDriver: false,
+        }).start();
+    }
 
     const {navigate} = useNavigation();
 
     function handleNavigationToNewPiu(){
-        navigate('NewPiu');
+        navigate('NewPiu', setRenderAgain);
     }
 
     return(
@@ -45,8 +55,14 @@ function Feed(){
                 <Logo source={logoImg}/>
                 <Interactions>
                     <AddPiu onPress={handleNavigationToNewPiu}>
-                        <FontAwesome name="plus-circle" size={27} color={"#FFAC2F"}/>
+                        <FontAwesome name="plus-circle" size={30} color={"#FFAC2F"}/>
                     </AddPiu>
+                    <SearchItems style ={{width: animation}}>
+                        <SearchLogo onPress = {onSearch}>
+                            <FontAwesome name="search" size={18} color={"#FFFFFF"}/>
+                        </SearchLogo>
+                        <SearchBar placeholder="Pesquisar" autoFocus onChangeText={text => {setSearch(text)}}/>
+                    </SearchItems>
                 </Interactions>
             </Topbar>
             <Timeline>
@@ -66,3 +82,7 @@ function Feed(){
 }
 
 export default Feed;
+
+function render() {
+    throw new Error('Function not implemented.');
+}

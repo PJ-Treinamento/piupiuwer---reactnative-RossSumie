@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import DeleteButton from "../DeleteButton";
 import LikeButton from "../LikeButton";
 import { Avatar, Name, NumLikes, PiuBlock, PiuContent, PiuInfo, PiuInteract, Piutext} from "./styles";
 
@@ -54,6 +55,7 @@ const PiuComp: React.FC<Piu> = ({id, likes, text, user}) =>{
                         {text}
                     </Piutext>
                 </PiuInfo>
+                <DeleteButton id={id}/>
             </PiuContent>
             <PiuInteract>
                     <LikeButton likes={likes} id={id} setNumLikes={setNumLikes} numLikes={numLikes}/>

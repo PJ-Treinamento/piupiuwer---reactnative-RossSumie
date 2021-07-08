@@ -4,6 +4,7 @@ import { useState } from "react";
 import api from "../../services/api";
 //import {AsyncStorage} from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 export interface User{
     id: string;
@@ -36,7 +37,6 @@ const AuthContext = createContext<AuthContextData>({}as AuthContextData);
 export const AuthProvider: React.FC = ({ children}) => {
 
 	const [userData, setUserData] = useState<AuthState>({} as AuthState);
-
         useEffect(()=>{
             async function carregarDadosUsuario(){
                 const token =  await AsyncStorage.getItem('@Project:token');
@@ -53,28 +53,32 @@ export const AuthProvider: React.FC = ({ children}) => {
 
 	const login = useCallback(async( cred, countEmail, countPassword) => {
         console.log(cred)
+        if(countEmail ===0 || countPassword === 0){
+            throw new Error("Ops, parece que os campos estão vazios!")
+        }
         try{
             const response = await api.post('/sessions/login', cred)
             const {token, user} = response.data;
-            await AsyncStorage.setItem('@Project:user', JSON.stringify(user));
-            await AsyncStorage.setItem('@Project:token', token);
 
             if(!!token){
+                await AsyncStorage.setItem('@Project:user', JSON.stringify(user));
+                await AsyncStorage.setItem('@Project:token', token);
                 setUserData({user: user, token:token})
                 api.defaults.headers.Authorization = `Bearer ${token}`
                 console.log(setUserData)
             }
         }
         catch(error){
-            if(countEmail ===0 || countPassword === 0){
-                alert("Ops, parece que os campos estão vazios!")
-            }
-            else{
-                alert("Ops, parece que seu email e/ou senha estão incorretos!")
-                console.log(error)
-            }
+            throw new Error("Ops, parece que seu email e/ou senha estão incorretos!")
         }
-    },[]);
+    },[userData]);
+
+    const logout = useCallback (async() => {
+        await AsyncStorage.removeItem('@Project:user');
+        await AsyncStorage.removeItem('@Project:token');
+
+        setUserData({} as AuthState);
+    }, [])
 
     return(
         <AuthContext.Provider value = {{user: userData.user, login, token: userData.token}}>

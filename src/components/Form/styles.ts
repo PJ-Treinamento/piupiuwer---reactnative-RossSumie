@@ -7,6 +7,8 @@ export const FormPiu = styled.View`
 `
 export const PiuContent = styled.TextInput`
     flex:1;
+    padding: 40px;
+    font-size: 20px;
 `
 export const Piar = styled(RectButton)`
     background-color: orange;

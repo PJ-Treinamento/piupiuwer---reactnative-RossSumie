@@ -1,13 +1,18 @@
 import React, { useState, useCallback } from 'react';
-import {Container, Title, Header, Inputs, Entrar, Buttontext, Textinput, Loginimg} from './styles';
+import {Container, Title, Header, Inputs, Entrar, Buttontext, Textinput, SimpleText, OrangeText, Loginimg} from './styles';
 import {useAuth} from '../../hooks/contexts/auth';
 import loginImg from '../../assets/images/login-01.png'
+import { useNavigation } from '@react-navigation/native';
+import { useEffect } from 'react';
+import {Text} from 'react-native'
 
 
 function Login(){
-    const {login} = useAuth();
+    const {login, token} = useAuth();
     const[countEmail, setCountEmail]=useState(0);
     const[countPassword, setCountPassword]=useState(0);
+    const {navigate} = useNavigation();
+    const [error, setError] = useState('');
 
 
     const [cred, setCred] = useState({
@@ -16,8 +21,18 @@ function Login(){
     })
     
     const handleLogin = useCallback(async () =>{
-        await login(cred, countEmail, countPassword);
+        try{
+            await login(cred, countEmail, countPassword);
+            navigate('Feed');
+        }
+        catch(err){
+            setError(err.message)
+        }
     },[countEmail, countPassword, cred, login]);
+
+    useEffect(()=>{
+        if (token) navigate('BottomTabs')
+    },[token])
 
 
     return( 
@@ -51,6 +66,15 @@ function Login(){
                         Entrar
                     </Buttontext>
                 </Entrar>
+                <Text>
+                    {error}
+                </Text>
+                <SimpleText>
+                    AINDA NÃO TEM SUA CONTA?
+                </SimpleText>
+                <OrangeText>
+                    CADASTRE-SE
+                </OrangeText>
             </Inputs>
         </Container>
     )

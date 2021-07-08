@@ -44,10 +44,23 @@ export const Textinput = styled.TextInput.attrs({
     margin-bottom: 20px;
   `
 export const Entrar = styled(RectButton)`
-        background-color: orange;
-        border: 1px transparent;
-        align-items: center;
-        justify-content: center;
-        height: 40px;
-        border-radius: 15px;
+    background-color: orange;
+    border: 1px transparent;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    border-radius: 15px;
+`
+export const SimpleText = styled.Text` 
+    font-family: 'Poppins_400Regular';
+    font-size: 15px;
+    align-self: center;
+    margin-top: 32px;
+`
+export const OrangeText = styled.TouchableOpacity`
+    font-family: 'Poppins_400Regular';
+    font-size: 15px;
+    align-self: center;
+    margin-top: 0px;
+    color: orange;
 `
