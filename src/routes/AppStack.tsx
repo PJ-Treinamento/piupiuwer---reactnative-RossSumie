@@ -6,7 +6,7 @@ import Login from "../pages/Login";
 import { useState } from "react";
 import { useAuth } from "../hooks/contexts/auth";
 import BottomTabs from "./BottomTabs";
-
+import Register from "../pages/Register";
 const{ Navigator, Screen }= createStackNavigator();
 
 export const AppStack = () => {
@@ -17,6 +17,7 @@ export const AppStack = () => {
             <Screen name='BottomTabs' component ={BottomTabs}/>
             <Screen name='Feed' component ={Feed}/>
             <Screen name='NewPiu' component ={NewPiu}/>
+            <Screen name='Register' component ={Register}/>
         </Navigator>
     );
 }

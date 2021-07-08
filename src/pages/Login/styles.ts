@@ -9,8 +9,8 @@ export const Header = styled.View`
     flex:1;
     z-index: 0;
     overflow: hidden;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
 `
 export const Inputs = styled.View`
     flex:1;

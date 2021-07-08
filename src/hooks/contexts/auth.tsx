@@ -30,6 +30,7 @@ interface AuthContextData{
     user:User;
     token: string;
     login(user:object, countEmail: number, countPassword: number): void;
+    logout():void;
 }
 
 const AuthContext = createContext<AuthContextData>({}as AuthContextData);
@@ -81,7 +82,7 @@ export const AuthProvider: React.FC = ({ children}) => {
     }, [])
 
     return(
-        <AuthContext.Provider value = {{user: userData.user, login, token: userData.token}}>
+        <AuthContext.Provider value = {{user: userData.user, login, token: userData.token, logout}}>
         {children}
         </AuthContext.Provider>
     )

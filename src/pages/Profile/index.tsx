@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import { Logo,  Topbar, Loginimg, Header, BodyTitle, AvatarImg, Name, Usrname, Follow, MyPius, Subtitle, Config} from './styles';
-import Modal from 'react-native-modal';
 import api from '../../services/api';
 import logoImg from '../../assets/images/logo.png'
 import loginImg from '../../assets/images/login-01.png'
@@ -9,10 +8,11 @@ import {useAuth} from '../../hooks/contexts/auth';
 import PiuComp from '../../components/Piu';
 import { Piu } from '../../components/Piu';
 import { FontAwesome } from "@expo/vector-icons";
+import { useCallback } from "react";
 
 
 function Profile (){
-    const{user} = useAuth();
+    const{user, logout} = useAuth();
     const[pius, setPius] = useState<Piu[]>([])
     useEffect(() => {
         const fetchData = async () => {
@@ -23,20 +23,17 @@ function Profile (){
         fetchData()
     }, [])
 
-    const[visible, setVisible] = useState(false);
-    console.log(visible)
+    const handleLogout= useCallback(async()=>{
+        logout()
+    }, [])
+    
     return (
         <Container>
             <Topbar>
                 <Logo source={logoImg}/>
-                <Config onPress={() => setVisible(!visible)}>
-                    <FontAwesome name="gear" size={30} color={"#FFAC2F"}/>
+                <Config onPress={() => handleLogout}>
+                    <FontAwesome name="power-off" size={25} color={"#FFAC2F"}/>
                 </Config>
-                <Modal isVisible={visible}>
-                    <Config onPress={() => setVisible(false)}>
-                            <FontAwesome name="heart" size={30} color={"#FFAC2F"}/>
-                    </Config>
-                </Modal>
             </Topbar>
             <Header>
                 <AvatarImg source={{uri:user.photo}}/>
@@ -63,13 +60,4 @@ function Profile (){
     )
 }
 export default Profile;
-
-/*<Follow>
-    <Usrname>
-        Seguindo {user.following}
-    </Usrname>
-    <Usrname>
-        Seguidores {user.followers}
-    </Usrname>
-</Follow>*/
 

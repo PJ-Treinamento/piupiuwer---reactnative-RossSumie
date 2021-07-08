@@ -23,3 +23,11 @@ export const Piar = styled(RectButton)`
 export const FormView = styled.View`
 
 `
+export const CounterView = styled.View`
+    flex:1;
+`
+export const Counter = styled.Text`
+    font-size: 15px;
+    position: absolute;
+    right: 0;
+`

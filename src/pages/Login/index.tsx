@@ -34,7 +34,9 @@ function Login(){
         if (token) navigate('BottomTabs')
     },[token])
 
-
+    function handleNavigationToRegister(){
+        navigate('Register');
+    }
     return( 
         <Container>
             <Header>
@@ -72,7 +74,7 @@ function Login(){
                 <SimpleText>
                     AINDA NÃO TEM SUA CONTA?
                 </SimpleText>
-                <OrangeText>
+                <OrangeText onPress={handleNavigationToRegister}>
                     CADASTRE-SE
                 </OrangeText>
             </Inputs>

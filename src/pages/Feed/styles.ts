@@ -46,6 +46,4 @@ export const SearchBar = styled(TextInput)`
     width: 100%;
     padding: 0 45px 0 10px;
     font-size: 15px;
-
-
 `
