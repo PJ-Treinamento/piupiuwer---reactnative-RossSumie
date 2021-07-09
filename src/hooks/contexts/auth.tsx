@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useState } from "react";
 import api from "../../services/api";
 //import {AsyncStorage} from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
 export interface User{
@@ -74,9 +74,9 @@ export const AuthProvider: React.FC = ({ children}) => {
         }
     },[userData]);
 
-    const logout = useCallback (async() => {
-        await AsyncStorage.removeItem('@Project:user');
-        await AsyncStorage.removeItem('@Project:token');
+    const logout = useCallback ( () => {
+        AsyncStorage.removeItem('@Project:user');
+        AsyncStorage.removeItem('@Project:token');
 
         setUserData({} as AuthState);
     }, [])

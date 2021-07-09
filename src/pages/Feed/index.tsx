@@ -7,10 +7,11 @@ import PiuComp from '../../components/Piu';
 import { Piu } from '../../components/Piu';
 import logoImg from '../../assets/images/logo.png'
 
-import { User } from '../../hooks/contexts/auth';
+import { useAuth, User } from '../../hooks/contexts/auth';
 import {Animated} from 'react-native';
 
 function Feed(){
+    const {user}=useAuth();
     const[pius, setPius] = useState<Piu[]>([])
     const [renderAgain, setRenderAgain] = useState(false)
     useEffect(() => {
@@ -73,7 +74,7 @@ function Feed(){
                 || piu.user.last_name.toLowerCase().includes(search.toLowerCase())){
                     
                 return(
-                <PiuComp {...piu}/>
+                <PiuComp {...piu} isPiuFromUser={user.username === piu.user.username ? true: false} key={piu.id}/>
                 )}
             } )}
             </Timeline>
@@ -82,7 +83,3 @@ function Feed(){
 }
 
 export default Feed;
-
-function render() {
-    throw new Error('Function not implemented.');
-}

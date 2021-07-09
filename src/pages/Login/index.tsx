@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import {Container, Title, Header, Inputs, Entrar, Buttontext, Textinput, SimpleText, OrangeText, Loginimg} from './styles';
+import {Container, Title, Header, Inputs, Entrar, Buttontext, Textinput, SimpleText, OrangeText, OrangeButton, Loginimg} from './styles';
 import {useAuth} from '../../hooks/contexts/auth';
 import loginImg from '../../assets/images/login-01.png'
 import { useNavigation } from '@react-navigation/native';
@@ -23,7 +23,7 @@ function Login(){
     const handleLogin = useCallback(async () =>{
         try{
             await login(cred, countEmail, countPassword);
-            navigate('Feed');
+            navigate('BottomTabs');
         }
         catch(err){
             setError(err.message)
@@ -58,6 +58,7 @@ function Login(){
                 <Textinput
                 placeholder = "Password"
                 value={cred.password}
+                secureTextEntry={true}
                 onChangeText={text => { 
                     setCred({...cred, password:(text)})
                     setCountPassword(text.length)
@@ -74,9 +75,11 @@ function Login(){
                 <SimpleText>
                     AINDA NÃO TEM SUA CONTA?
                 </SimpleText>
-                <OrangeText onPress={handleNavigationToRegister}>
-                    CADASTRE-SE
-                </OrangeText>
+                <OrangeButton onPress={handleNavigationToRegister}>
+                    <OrangeText>
+                        CADASTRE-SE
+                    </OrangeText>
+                </OrangeButton>
             </Inputs>
         </Container>
     )

@@ -57,10 +57,13 @@ export const SimpleText = styled.Text`
     align-self: center;
     margin-top: 32px;
 `
-export const OrangeText = styled.TouchableOpacity`
+export const OrangeButton = styled.TouchableOpacity`
+    margin-top: 0px;
+`
+export const OrangeText = styled.Text`
     font-family: 'Poppins_400Regular';
     font-size: 15px;
     align-self: center;
-    margin-top: 0px;
     color: orange;
+
 `

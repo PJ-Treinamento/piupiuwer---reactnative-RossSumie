@@ -10,6 +10,7 @@ export interface Piu{
     text: string;
     created_at: Date;
     updated_at: Date;
+    isPiuFromUser:boolean;
 }
 
 
@@ -41,7 +42,7 @@ interface PiuProps{
     username?:string;
 }
 
-const PiuComp: React.FC<Piu> = ({id, likes, text, user}) =>{
+const PiuComp: React.FC<Piu> = ({id, likes, text, user, isPiuFromUser}) =>{
     const [numLikes, setNumLikes] = useState<number>(likes.length);
     return(
         <PiuBlock>
@@ -55,7 +56,7 @@ const PiuComp: React.FC<Piu> = ({id, likes, text, user}) =>{
                         {text}
                     </Piutext>
                 </PiuInfo>
-                <DeleteButton id={id}/>
+                    {isPiuFromUser? <DeleteButton id={id}/>:""}
             </PiuContent>
             <PiuInteract>
                     <LikeButton likes={likes} id={id} setNumLikes={setNumLikes} numLikes={numLikes}/>

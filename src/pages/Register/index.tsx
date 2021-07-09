@@ -18,20 +18,16 @@ function Register(){
         photo:'',
         bio:'',
     }) 
+    const {login} = useAuth()
     const handleRegister = useCallback(async () =>{
-        const {login} = useAuth();
-        const cred= useState({
-            email: reg.email,
-            password: reg.password,
-        })
         if(
-            reg.email != "" &&
-            reg.password != "" &&
-            reg.firstName != "" &&
-            reg.lastName != "" &&
-            reg.username != "" &&
-            reg.photo != "" &&
-            reg.bio != ""
+            reg.email !== "" &&
+            reg.password !== "" &&
+            reg.firstName !== "" &&
+            reg.lastName !== "" &&
+            reg.username !== "" &&
+            reg.photo !== "" &&
+            reg.bio !== ""
         ){
             await api.post("/register",{
                 first_name: reg.firstName,
@@ -42,7 +38,7 @@ function Register(){
                 password: reg.password,
                 username: reg.username,
             });
-            login(cred, 1, 1);
+            login({email:reg.email,password:reg.password}, 1, 1);
         } else{
             alert('Preencha todos os campos!')
         }
@@ -91,8 +87,8 @@ function Register(){
                     UMA FRASE PRA SUA BIO
                 </TextInputTitle>
                 <TextInputField maxLength={140} onChangeText={text=>setReg({...reg, bio:(text)})}/>
-                <Cadastrar>
-                    <Buttontext onPress={handleRegister}>
+                <Cadastrar onPress={handleRegister}>
+                    <Buttontext>
                         Tudo certo!
                     </Buttontext>
                 </Cadastrar>

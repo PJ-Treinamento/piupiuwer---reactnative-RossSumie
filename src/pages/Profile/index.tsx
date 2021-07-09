@@ -9,9 +9,11 @@ import PiuComp from '../../components/Piu';
 import { Piu } from '../../components/Piu';
 import { FontAwesome } from "@expo/vector-icons";
 import { useCallback } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 
 function Profile (){
+    const {navigate} = useNavigation();
     const{user, logout} = useAuth();
     const[pius, setPius] = useState<Piu[]>([])
     useEffect(() => {
@@ -23,15 +25,16 @@ function Profile (){
         fetchData()
     }, [])
 
-    const handleLogout= useCallback(async()=>{
+    const handleLogout= useCallback(()=>{
         logout()
+        navigate('Login');
     }, [])
     
     return (
         <Container>
             <Topbar>
                 <Logo source={logoImg}/>
-                <Config onPress={() => handleLogout}>
+                <Config onPress={handleLogout}>
                     <FontAwesome name="power-off" size={25} color={"#FFAC2F"}/>
                 </Config>
             </Topbar>

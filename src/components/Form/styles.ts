@@ -25,9 +25,10 @@ export const FormView = styled.View`
 `
 export const CounterView = styled.View`
     flex:1;
+    margin-right: 15px;
 `
 export const Counter = styled.Text`
-    font-size: 15px;
+    font-size: 20px;
     position: absolute;
     right: 0;
 `
